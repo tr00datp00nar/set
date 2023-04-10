@@ -8,8 +8,9 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:        `set`,
+	Aliases:     []string{`toggle`},
 	Usage:       `COMMAND`,
-	Version:     `v0.0.1`,
+	Version:     `v0.0.2`,
 	Copyright:   `Copyright Micah Nadler 2023`,
 	License:     `Apache-2.0`,
 	Summary:     `Tool to set various system settings.`,
