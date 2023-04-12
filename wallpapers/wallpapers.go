@@ -3,6 +3,7 @@ package wallpapers
 import (
 	"fmt"
 	"regexp"
+	"runtime"
 
 	"github.com/charmbracelet/log"
 
@@ -10,24 +11,29 @@ import (
 )
 
 func waifus() {
-	checkPath, _ := scriptish.NewPipeline(
-		scriptish.Exec("gsettings", "get", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path"),
-	).Exec().TrimmedString()
+	runtimeOs := runtime.GOOS
+	if runtimeOs == "linux" {
+		checkPath, _ := scriptish.NewPipeline(
+			scriptish.Exec("gsettings", "get", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path"),
+		).Exec().TrimmedString()
 
-	alreadyOn, err := regexp.MatchString(`(waifu)`, checkPath)
-	if err != nil {
-		log.Warn(err)
-	}
+		alreadyOn, err := regexp.MatchString(`(waifu)`, checkPath)
+		if err != nil {
+			log.Warn(err)
+		}
 
-	if alreadyOn == true {
-		scriptish.NewPipeline(
-			scriptish.Exec("gsettings", "set", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path", "/usr/share/backgrounds/wallpapers/"),
-		).Exec()
-		fmt.Println("Disabled waifus")
+		if alreadyOn == true {
+			scriptish.NewPipeline(
+				scriptish.Exec("gsettings", "set", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path", "/usr/share/backgrounds/wallpapers/"),
+			).Exec()
+			fmt.Println("Disabled waifus")
+		} else {
+			scriptish.NewPipeline(
+				scriptish.Exec("gsettings", "set", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path", "~/pictures/wallpapers/waifus"),
+			).Exec()
+			fmt.Println("Enabled waifus")
+		}
 	} else {
-		scriptish.NewPipeline(
-			scriptish.Exec("gsettings", "set", "org.gnome.shell.extensions.WallpaperSwitcher", "wallpaper-path", "~/pictures/wallpapers/waifus"),
-		).Exec()
-		fmt.Println("Enabled waifus")
+		log.Fatal("Unsupported OS...Exiting...")
 	}
 }
