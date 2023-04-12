@@ -10,6 +10,10 @@ curl -L https://github.com/tr00datp00nar/set/releases/latest/download/set-darwin
 curl -L https://github.com/tr00datp00nar/set/releases/latest/download/set-darwin-arm64 -o ~/.local/bin/set
 curl -L https://github.com/tr00datp00nar/set/releases/latest/download/set-windows-amd64 -o ~/.local/bin/set
 ```
+## Wallpaper
+Currently only supported on Linux. Change the current wallpaper directory using `gconf`.
+
+# Resources
 To learn more about Bonzai stateful command trees: https://github.com/rwxrob/bonzai
 
 To see the original Bonzai stateful command tree z: https://github.com/rwxrob/z
