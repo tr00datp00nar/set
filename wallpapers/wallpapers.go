@@ -2,6 +2,7 @@ package wallpapers
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"runtime"
 
@@ -9,6 +10,7 @@ import (
 	"github.com/tr00datp00nar/fn"
 )
 
+// TODO: Include functionality for darwin and windows
 func waifus() {
 	runtimeOs := runtime.GOOS
 	if runtimeOs == "linux" {
@@ -23,7 +25,9 @@ func waifus() {
 			fn.ExecBash("gsettings set org.gnome.shell.extensions.WallpaperSwitcher wallpaper-path '/usr/share/backgrounds/wallpapers/'")
 			fmt.Println("Disabled waifus")
 		} else {
-			fn.ExecBash("gsettings set org.gnome.shell.extensions.WallpaperSwitcher wallpaper-path '~/pictures/wallpapers/waifus'")
+			home, _ := os.UserHomeDir()
+			wallpaperPath := home + "/pictures/wallpapers/waifus"
+			fn.ExecBash("gsettings set org.gnome.shell.extensions.WallpaperSwitcher wallpaper-path " + wallpaperPath)
 			fmt.Println("Enabled waifus")
 		}
 	} else {
